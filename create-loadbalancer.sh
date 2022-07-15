@@ -1,4 +1,17 @@
 #!/bin/bash
+
+# Verificar si existe la carpte ./logs
+if [ ! -d "./logs" ]; then
+    mkdir logs
+fi
+
+# si no existe la carpeta logs, exit
+if [ ! -d "./logs" ]; then
+    echo "No existe la carpeta logs"
+    exit 1
+fi
+
+
 nameGroup=$1
 instancesNumber=$2
 
@@ -9,20 +22,22 @@ then
     exit 1
 fi
 
-if [[ $nameGroup =~ [^[:alnum:]] ]]
+if [[ $nameGroup =~ ^[a-zA-Z]+$ ]]
 then
-    echo "El nombre del grupo debe ser una palabra"
-    exit 1
-fi
-if [[ $instancesNumber =~ [^[:digit:]] ]]
-then
-    echo "El numero de instancias debe ser un numero entero positivo"
+    echo "El nombre del grupo es correcto"
+else
+    echo "El nombre del grupo no es correcto"
+    echo "Debe se una palabra sin espacios"
     exit 1
 fi
 
-if [ $instancesNumber -eq 0 ]
+# el segundo parametro debe ser un numero
+if [[ $instancesNumber =~ ^[1-9]+$ ]]
 then
-    echo "El numero de instancias debe ser un numero entero positivo"
+    echo "El numero de instancias es correcto"
+else
+    echo "El numero de instancias no es correcto"
+    echo "Debe ser un numero entero positivo"
     exit 1
 fi
 
